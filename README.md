@@ -60,11 +60,9 @@ $ npm run test:cov
 
 ## Localhost
 
-```bash
 [Localhost](Localhost:3000)
 
 [Swagger](localhost:3000/api)
-```
 
 ## Support
 
