@@ -1,47 +1,36 @@
-import { Body, Controller, Delete, Get, Param, Post, Put, Query, Req } from '@nestjs/common';
-import { Request } from 'express';
+import { Body, Controller, Delete, Get, HttpStatus, Param, Post, Put, Query, Req, Res } from '@nestjs/common';
+import { Request, Response } from 'express';
 import { Observable, of } from 'rxjs';
+import { CatsService } from './cats.service';
 import { CreateCatDto, UpdateCatDto, ListAllEntities } from './dto';
 
 @Controller('cats')
 export class CatsController {
-
-    // @Get()
-    // findAll(@Req() request: Request): string {
-    //     return 'Returns all cats';
-    // }
-    // @Get()
-    // async findAll(): Promise<any[]> {
-    //     return [];
-    // }
-    // @Get()
-    //     findAll(): Observable<any[]> {
-    //     return of([]);
-    // }
+    constructor(private readonly catsService: CatsService) { }
 
     @Post()
-    async create(@Body() createCatDto: CreateCatDto) {
-        return 'Adds a new cat';
+    create(@Body() createCatDto: CreateCatDto): Observable<string> {
+        return of(this.catsService.create(createCatDto));
     }
 
     @Get()
-    async findAll(@Query() query: ListAllEntities) {
-        return `Returns all cats, limit: ${query.limit} items`;
+    findAll(@Query() query: ListAllEntities): Observable<string> {
+        return of(this.catsService.findAll(query));
     }
 
     @Get(':id')
-    async findOne(@Param('id') id: string) {
-        return `Returns a #${id} cat`;
+    findOne(@Param('id') id: number): Observable<string> {
+        return of(this.catsService.findOne(id));
     }
 
     @Put(':id')
-    async update(@Param('id') id: string, @Body() updateCatDto: UpdateCatDto) {
-        return `Updates a #${id} cat`;
+    update(@Param('id') id: number, @Body() updateCatDto: UpdateCatDto): Observable<string> {
+        return of(this.catsService.update(id, updateCatDto));
     }
 
     @Delete(':id')
-    async remove(@Param('id') id: string) {
-        return `Removes a #${id} cat`;
+    remove(@Param('id') id: number): Observable<string> {
+        return of(this.catsService.remove(id));
     }
 
 }
