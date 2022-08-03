@@ -1,9 +1,13 @@
 import { Body, Controller, Delete, Get, HttpStatus, Param, Post, Put, Query, Req, Res } from '@nestjs/common';
+import { ApiBearerAuth, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { Request, Response } from 'express';
 import { Observable, of } from 'rxjs';
 import { CatsService } from './cats.service';
 import { CreateCatDto, UpdateCatDto, ListAllEntities } from './dto';
+import { Cat } from './entity';
 
+@ApiBearerAuth()
+@ApiTags('cats')
 @Controller('cats')
 export class CatsController {
     constructor(private readonly catsService: CatsService) { }
@@ -19,17 +23,17 @@ export class CatsController {
     }
 
     @Get(':id')
-    findOne(@Param('id') id: number): Observable<string> {
+    findOne(@Param('id') id: string): Observable<string> {
         return of(this.catsService.findOne(id));
     }
 
     @Put(':id')
-    update(@Param('id') id: number, @Body() updateCatDto: UpdateCatDto): Observable<string> {
+    update(@Param('id') id: string, @Body() updateCatDto: UpdateCatDto): Observable<string> {
         return of(this.catsService.update(id, updateCatDto));
     }
 
     @Delete(':id')
-    remove(@Param('id') id: number): Observable<string> {
+    remove(@Param('id') id: string): Observable<string> {
         return of(this.catsService.remove(id));
     }
 

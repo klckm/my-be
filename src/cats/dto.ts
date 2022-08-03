@@ -1,15 +1,45 @@
+import { IsInt, IsString } from 'class-validator';
+
 export class CreateCatDto {
-  name: string;
-  age: number;
-  breed: string;
+  @IsString()
+  readonly name: string;
+
+  @IsInt()
+  readonly age: number;
+
+  @IsString()
+  readonly breed: string;
 }
 
 export class UpdateCatDto { // id?
-  name: string;
-  age: number;
-  breed: string;
+  @IsString()
+  readonly name: string;
+
+  @IsInt()
+  readonly age: number;
+
+  @IsString()
+  readonly breed: string;
 }
 
 export class ListAllEntities {
+  @IsInt()
   limit: number // nevim
 }
+
+
+// export class CreateCatDto {
+//   name: string;
+//   age: number;
+//   breed: string;
+// }
+
+// export class UpdateCatDto { // id?
+//   name: string;
+//   age: number;
+//   breed: string;
+// }
+
+// export class ListAllEntities {
+//   limit: number // nevim
+// }

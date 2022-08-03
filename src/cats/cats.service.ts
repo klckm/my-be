@@ -12,15 +12,15 @@ export class CatsService {
         return `Returns all cats, limit: ${query.limit} items`;
     }
 
-    findOne(id: number): string {
+    findOne(id: string): string {
         return `Returns a #${id} cat`;
     }
 
-    update(id: number, updateCatDto: UpdateCatDto): string {
+    update(id: string, updateCatDto: UpdateCatDto): string {
         return `Updates a #${id} cat`;
     }
 
-    remove(id: number): string {
+    remove(id: string): string {
         return `Removes a #${id} cat`;
     }
 }
