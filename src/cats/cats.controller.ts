@@ -3,8 +3,8 @@ import { ApiBearerAuth, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagg
 import { Request, Response } from 'express';
 import { Observable, of } from 'rxjs';
 import { CatsService } from './cats.service';
-import { CreateCatDto, UpdateCatDto, ListAllEntities } from './dto';
-import { Cat } from './entity';
+import { Cat } from './cat.entity';
+import { CatDto, CreateCatDto, UpdateCatDto, ListAllEntities } from './cats.dto';
 
 @ApiBearerAuth()
 @ApiTags('cats')
@@ -13,28 +13,57 @@ export class CatsController {
     constructor(private readonly catsService: CatsService) { }
 
     @Post()
-    create(@Body() createCatDto: CreateCatDto): Observable<string> {
-        return of(this.catsService.create(createCatDto));
+    @ApiOperation({ summary: 'Create cat' })
+    @ApiResponse({
+        description: 'Create record',
+        type: Cat,
+    })
+    async create(@Body() createCatDto: CreateCatDto): Promise<Cat> {
+        return this.catsService.create(createCatDto);
     }
 
     @Get()
-    findAll(@Query() query: ListAllEntities): Observable<string> {
-        return of(this.catsService.findAll(query));
+    @ApiOperation({ summary: 'Get all cats' })
+    @ApiResponse({
+        description: 'Found records',
+        type: [Cat],
+    })
+    async findAll(): Promise<Cat[]> {
+        return this.catsService.findAll();
     }
 
     @Get(':id')
-    findOne(@Param('id') id: string): Observable<string> {
-        return of(this.catsService.findOne(id));
+    @ApiOperation({ summary: 'Get a one cat' })
+    @ApiResponse({
+        description: 'Found record',
+        type: Cat,
+    })
+    async findOne(@Param('id') id: number): Promise<Cat> {
+        return this.catsService.findOne(id);
     }
+    // @Post()
+    // create(@Body() createCatDto: CreateCatDto): Observable<string> {
+    //     return of(this.catsService.create(createCatDto));
+    // }
 
-    @Put(':id')
-    update(@Param('id') id: string, @Body() updateCatDto: UpdateCatDto): Observable<string> {
-        return of(this.catsService.update(id, updateCatDto));
-    }
+    // @Get()
+    // findAll(@Query() query: ListAllEntities): Observable<string> {
+    //     return of(this.catsService.findAll(query));
+    // }
 
-    @Delete(':id')
-    remove(@Param('id') id: string): Observable<string> {
-        return of(this.catsService.remove(id));
-    }
+    // @Get(':id')
+    // findOne(@Param('id') id: string): Observable<string> {
+    //     return of(this.catsService.findOne(id));
+    // }
+
+    // @Put(':id')
+    // update(@Param('id') id: string, @Body() updateCatDto: UpdateCatDto): Observable<string> {
+    //     return of(this.catsService.update(id, updateCatDto));
+    // }
+
+    // @Delete(':id')
+    // remove(@Param('id') id: string): Observable<string> {
+    //     return of(this.catsService.remove(id));
+    // }
 
 }

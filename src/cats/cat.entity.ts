@@ -5,14 +5,22 @@ export class Cat {
    * The name of the Cat
    * @example Kitty
    */
+
+  @ApiProperty({
+    example: "Mačka",
+    //description: 'Name of Cat'
+  })
   name: string;
 
-  @ApiProperty({ example: 1, description: 'The age of the Cat' })
+  @ApiProperty({
+    example: 1,
+    //description: 'Age of Cat'
+  })
   age: number;
 
   @ApiProperty({
     example: 'Maine Coon',
-    description: 'The breed of the Cat',
+    //description: 'Breed of Cat',
   })
   breed: string;
 }
