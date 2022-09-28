@@ -1,0 +1,9 @@
+{
+    "editor.fontFamily": "Tahoma, Verdana, Menlo, Monaco, 'Courier New', monospace",
+    "editor.fontSize": 13,
+    "terminal.integrated.fontFamily": "monospace",
+    "editor.inlayHints.fontFamily": "",
+    "prettier.tabWidth": 4,
+    "prettier.useTabs": false,
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+}

@@ -1,26 +1,53 @@
 import { Injectable } from '@nestjs/common';
-import { CreateCatDto, ListAllEntities, UpdateCatDto } from './dto';
+import { CatDto, CreateCatDto, ListAllEntities, UpdateCatDto } from './dto';
+import { Cat } from './entity';
 
 @Injectable()
 export class CatsService {
+    private readonly cats: Cat[] = [];
 
-    create(createCatDto: CreateCatDto): string {
-        return 'Adds a new cat';
+    create(cat: Cat) {
+        //: Cat[]
+        this.cats.push(cat);
+        //return this.cats;
+        //vyresit id
     }
 
-    findAll(query: ListAllEntities): string {
-        return `Returns all cats, limit: ${query.limit} items`;
+    findAll(): Cat[] {
+        return this.cats;
     }
 
-    findOne(id: string): string {
-        return `Returns a #${id} cat`;
+    findOne(id: number): Cat {
+        return this.cats[id]; // zatim podle indexu
     }
 
-    update(id: string, updateCatDto: UpdateCatDto): string {
-        return `Updates a #${id} cat`;
+    update(id: number, dto: CatDto): Cat {
+        return (this.cats[id] = dto);
     }
 
-    remove(id: string): string {
-        return `Removes a #${id} cat`;
+    remove(id: number): Cat[] {
+        this.cats.splice(id, 1);
+        return this.cats;
     }
+
+    // create(createCatDto: CreateCatDto): string {
+    //     return 'Adds a new cat';
+    // }
+
+    // findAll(query: ListAllEntities): string {
+    //     // return `Returns all cats, limit: ${query.limit} items`;
+    //     return `Returns all cats, limit: ${query.limit} items`;
+    // }
+
+    // findOne(id: number): string {
+    //     return `Returns a #${id} cat`;
+    // }
+
+    // update(id: string, updateCatDto: UpdateCatDto): string {
+    //     return `Updates a #${id} cat`;
+    // }
+
+    // remove(id: string): string {
+    //     return `Removes a #${id} cat`;
+    // }
 }
