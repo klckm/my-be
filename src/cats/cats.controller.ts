@@ -10,6 +10,7 @@ import {
     Query,
     Req,
     Res,
+    UseFilters,
 } from '@nestjs/common';
 import {
     ApiBearerAuth,
@@ -19,6 +20,7 @@ import {
 } from '@nestjs/swagger';
 import { Request, Response } from 'express';
 import { Observable, of } from 'rxjs';
+import { HttpExceptionFilter } from 'src/filters/http-exception.filter';
 import { CatsService } from './cats.service';
 import { CreateCatDto, UpdateCatDto, ListAllEntities, CatDto } from './dto';
 import { Cat } from './entity';
@@ -26,6 +28,7 @@ import { Cat } from './entity';
 @ApiBearerAuth()
 @ApiTags('cats')
 @Controller('cats')
+// @UseFilters(new HttpExceptionFilter())
 export class CatsController {
     constructor(private readonly service: CatsService) {}
 

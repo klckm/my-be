@@ -1,6 +1,9 @@
+import { Logger } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { AppModule } from './app.module';
+import { HttpExceptionFilter } from './filters/http-exception.filter';
+import { LoggerMiddleware } from './mw/logger.middleware';
 import {
     SwaggerDocumentOptions,
     ExpressSwaggerCustomOptions,
@@ -8,6 +11,9 @@ import {
 
 async function bootstrap() {
     const app = await NestFactory.create(AppModule);
+
+    app.use(LoggerMiddleware);
+    app.useGlobalFilters(new HttpExceptionFilter());
 
     const config = new DocumentBuilder()
         .setTitle('Cats example')
