@@ -1,7 +1,8 @@
 import { Logger } from '@nestjs/common';
-import { NestFactory } from '@nestjs/core';
+import { HttpAdapterHost, NestFactory } from '@nestjs/core';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { AppModule } from './app.module';
+import { AllExceptionsFilter } from './filters/all-exceptions.filter';
 import { HttpExceptionFilter } from './filters/http-exception.filter';
 import { LoggerMiddleware } from './mw/logger.middleware';
 import {
@@ -14,6 +15,8 @@ async function bootstrap() {
 
     app.use(LoggerMiddleware);
     app.useGlobalFilters(new HttpExceptionFilter());
+    // const { httpAdapter } = app.get(HttpAdapterHost);
+    // app.useGlobalFilters(new AllExceptionsFilter(httpAdapter));
 
     const config = new DocumentBuilder()
         .setTitle('Cats example')
@@ -21,14 +24,16 @@ async function bootstrap() {
         .setVersion('1.0')
         .addTag('cats')
         .build();
+
     const options: SwaggerDocumentOptions = {
         operationIdFactory: (controllerKey: string, methodKey: string) =>
             methodKey,
     };
+
     const document = SwaggerModule.createDocument(app, config, options);
     SwaggerModule.setup('api', app, document);
 
     await app.listen(3000);
-    console.log(`Application is running on: ${await app.getUrl()}`);
+    console.log(`Application is running on: ${await app.getUrl()}/API`);
 }
 bootstrap();
