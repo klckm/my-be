@@ -5,6 +5,7 @@ import {
     Get,
     HttpStatus,
     Param,
+    ParseIntPipe,
     Post,
     Put,
     Query,
@@ -43,20 +44,20 @@ export class CatsController {
     }
 
     @Get(':id')
-    async findOne(@Param('id') id: number): Promise<CatDto> {
+    async findOne(@Param('id', ParseIntPipe) id: number): Promise<CatDto> {
         return this.service.findOne(id);
     }
 
     @Put(':id')
     async update(
-        @Param('id') id: number,
+        @Param('id', ParseIntPipe) id: number,
         @Body() dto: CatDto,
     ): Promise<CatDto> {
         return this.service.update(id, dto);
     }
 
     @Delete(':id')
-    async remove(@Param('id') id: number): Promise<CatDto[]> {
+    async remove(@Param('id', ParseIntPipe) id: number): Promise<CatDto[]> {
         return this.service.remove(id);
     }
 
