@@ -1,6 +1,7 @@
 import {
     Body,
     Controller,
+    DefaultValuePipe,
     Delete,
     Get,
     HttpStatus,
